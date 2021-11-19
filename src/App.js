@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BarChart from "./D3/BarChart";
+import BarChart, {initCall} from "./D3/BarChart";
 import LineGraph from "./D3/LineGraph";
 
 function App() {
@@ -7,17 +7,14 @@ function App() {
 
   function UpdateData (data) {
     setObjdata({data:data, graph:objdata.graph, time:objdata.time});
-    console.log(objdata);
   }
 
   function UpdateGraph (graph) {
     setObjdata({data:objdata.data, graph:graph, time:objdata.time});
-    console.log(objdata);
   }
 
   function UpdateTime (time) {
     setObjdata({data:objdata.data, graph:objdata.graph, time:time});
-    console.log(objdata);
   }
 
   return (

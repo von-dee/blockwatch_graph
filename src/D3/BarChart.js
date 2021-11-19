@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from  'd3';
-import data, { requests, latency, trafic, users }  from '../data/data';
+import mockdata from '../data/data';
+
 
 export default function BarChart({ objdata }) {
 
+  var datahold = mockdata.M1;
+  var yaxis_index = 1;
+  var data_type = objdata.data;
+  var tm = objdata.time;
+  var tm_lable = tm;
+
+  
   function plot(chart, width, height) {
+    
+    var data = datahold;
+
     // create scales!
     const xScale = d3.scaleBand()
-        .domain(data.map(d => d.country))
+        .domain(data.map(d => d[0]))
         .range([0, width]);
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.value)])
+        .domain([0, d3.max(data, d => d[yaxis_index])])
         .range([height, 0]);
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -19,9 +30,9 @@ export default function BarChart({ objdata }) {
         .enter()
         .append('rect')
         .classed('bar', true)
-        .attr('x', d => xScale(d.country))
-        .attr('y', d => yScale(d.value))
-        .attr('height', d => (height - yScale(d.value)))
+        .attr('x', d => xScale(d[0]))
+        .attr('y', d => yScale(d[yaxis_index]))
+        .attr('height', d => (height - yScale(d[yaxis_index])))
         .attr('width', d => xScale.bandwidth())
         .style('fill', (d, i) => colorScale(i));
 
@@ -30,11 +41,11 @@ export default function BarChart({ objdata }) {
         .enter()
         .append('text')
         .classed('bar-label', true)
-        .attr('x', d => xScale(d.country) + xScale.bandwidth()/2)
+        .attr('x', d => xScale(d[0]) + xScale.bandwidth()/2)
         .attr('dx', 0)
-        .attr('y', d => yScale(d.value))
+        .attr('y', d => yScale(d[yaxis_index]))
         .attr('dy', -6)
-        .text(d => d.value);
+        .text(d => d[yaxis_index]);
 
     const xAxis = d3.axisBottom()
         .scale(xScale);
@@ -60,7 +71,7 @@ export default function BarChart({ objdata }) {
         .attr('fill', '#000')
         .style('font-size', '20px')
         .style('text-anchor', 'middle')
-        .text('Country');    
+        .text(tm_lable);    
         
     chart.select('.y.axis')
         .append('text')
@@ -70,25 +81,22 @@ export default function BarChart({ objdata }) {
         .attr('fill', '#000')
         .style('font-size', '20px')
         .style('text-anchor', 'middle')
-        .text('Government Expenditure in Billion Dollars');   
+        .text(data_type);   
         
     const yGridlines = d3.axisLeft()
         .scale(yScale)
         .ticks(5)
         .tickSize(-width,0,0)
         .tickFormat('')
-        
-
-    // chart.append('g')
-    //     .call(yGridlines)
-    //     .classed('gridline', true);
+    
   }
 
   function drawChart() {
       const width = 800;
       const height = 450;
 
-      const svg = d3.select('#BarChartTwo')
+      const svg = d3.select('#BarChart')
+          .html('')
           .append('svg')
           .attr('id', 'chart')
           .attr('width', width)
@@ -110,51 +118,44 @@ export default function BarChart({ objdata }) {
       plot(chart, chartWidth, chartHeight);
 
   }
+  
+  function initCall() {
+
+    yaxis_index = (data_type === "Requests") ? 1 
+        :(data_type === "Latency") ? 5
+        :(data_type === "Trafic") ? 7
+        :(data_type === "Users") ? 8
+        :1;
+
+
+    datahold = (tm === "M1") ? mockdata.M1 
+        :(tm === "H1") ? mockdata.H1 
+        :(tm === "D") ? mockdata.D
+        :mockdata.M1;
+
+    tm_lable = (tm === "M1") ? 'Minute Time Frame' 
+        :(tm === "H1") ? 'Hourly Time Frame' 
+        :(tm === "D") ? 'Daily Time Frame'  
+        :'Minute Time Frame';
+
+    drawChart();
+  }
+
 
   useEffect(() => {
     
-    var gottendata = [];
-    var tm = objdata.time;
-
-    if(objdata.data === "Requests"){
-        gottendata = (tm === "M1") ? requests.M1 
-                    :(tm === "H1") ? requests.H1 
-                    :(tm === "D1") ? requests.D1 
-                    :requests.M1;
-    }else if(objdata.data === "Latency"){
-        gottendata = (tm === "M1") ? latency.M1 
-                    :(tm === "H1") ? latency.H1 
-                    :(tm === "D1") ? latency.D1 
-                    :latency.M1;
-    }else if(objdata.data === "Trafic"){
-        gottendata = (tm === "M1") ? trafic.M1 
-                    :(tm === "H1") ? trafic.H1 
-                    :(tm === "D1") ? trafic.D1 
-                    :trafic.M1;
-    }else if(objdata.data === "Users"){
-        gottendata = (tm === "M1") ? users.M1 
-                    :(tm === "H1") ? users.H1 
-                    :(tm === "D1") ? users.D1 
-                    :users.M1;
-    }
-
-    drawChart();
-
-  }, []);
+    initCall();
+  }, [objdata]);
  
   return(
     <>
-    <div>
+        <div>
+            {objdata.data};
+            {objdata.graph};
+            {objdata.time}
+        </div><br></br>
 
-{objdata.data}
-;
-{objdata.graph}
-;
-{objdata.time }
-  
-</div>
-                  <br></br>
-      <div id="BarChartTwo"></div> 
+        <div id="BarChart"></div> 
     </>
   )
 

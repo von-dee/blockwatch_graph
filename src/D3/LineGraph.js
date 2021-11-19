@@ -1,35 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from  'd3';
-import data, { requests, latency, trafic, users }  from '../data/data';
+import mockdata from '../data/data';
 
 export default function LineGraph({ objdata }) {
   
+  
+  var datahold = mockdata.M1;
+  var yaxis_index = 1;
+  var data_type = objdata.data;
+  var tm = objdata.time;
+  var tm_lable = tm;
+
+
   async function LineChart() {
-    
+
+      var data = datahold;
+
       // Generate random data for our line where x is [0,15) and y is between 0 and 100
       let lineData = []
       for(let i = 0; i < 15; i++) {
           lineData.push({x: i + 1, y: Math.round(Math.random() * 100)})
       }
 
+      const width = 800;
+      const height = 300;
+
       // Create our scales to map our data values(domain) to coordinate values(range)
-      let xScale = d3.scaleLinear().domain([0,15]).range([0, 300])
-      let yScale = d3.scaleLinear().domain([0,100]).range([300, 0]) // Since the SVG y starts at the top, we are inverting the 0 and 300.
-      
+      let xScale = d3.scaleBand()
+        .domain(data.map(d => d[0]))
+        .range([0, width]);
+        
+      let yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d[yaxis_index])])
+        .range([height, 0]);
+
       // Generate a path with D3 based on the scaled data values
       let line = d3.line()
-        .x(dt => xScale(dt.x))
-        .y(dt => yScale(dt.y))
+        .x(dt => xScale(dt[0]))
+        .y(dt => yScale(dt[yaxis_index]))
       
       // Generate the x and y Axis based on these scales
       let xAxis = d3.axisBottom(xScale)
       let yAxis = d3.axisLeft(yScale)
+
+      d3.select('#LineChart').selectAll("g").remove()
       
       // Create the horizontal base line
-      d3.select('#LineChart').selectAll('path').datum(lineData) // Bind our data to the path element
-      .attr('d', d3.line().x(dt => xScale(dt.x)) // Set the path to our line function, but where x is the corresponding x
+      d3.select('#LineChart').selectAll('path').datum(data) // Bind our data to the path element
+      .attr('d', d3.line().x(dt => xScale(dt[0])) // Set the path to our line function, but where x is the corresponding x
       .y(yScale(0))).attr("stroke", "blue").attr('fill', 'none') // Set the y to always be 0 and set stroke and fill color
-
+      .style('font-size', '20px')
+      
 
       
       d3.select('#LineChart').selectAll('path').transition().duration(1000) // Transition the line over 1 sec
@@ -37,55 +58,75 @@ export default function LineGraph({ objdata }) {
       
       // Append the Axis to our LineChart svg
       d3.select('#LineChart').append("g")
-      .attr("transform", "translate(0, " + 300 + ")").call(xAxis)
+      .classed('x axis', true)
+      .attr("transform", "translate(0, 300)").call(xAxis)
 
       d3.select('#LineChart').append("g")
+      .classed('y axis', true)
       .attr("transform", "translate(0, 0)").call(yAxis)
+
+      d3.select('#LineChart').select('.x.axis')
+        .append('text')
+        .attr('x',  width/2)
+        .attr('y', 60)
+        .attr('fill', '#000')
+        .style('font-size', '20px')
+        .style('text-anchor', 'middle')
+        .text(tm_lable);    
+        
+      d3.select('#LineChart').select('.y.axis')
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('transform', `translate(-50, ${height/2}) rotate(-90)`)
+        .attr('fill', '#000')
+        .style('font-size', '20px')
+        .style('text-anchor', 'middle')
+        .text(data_type);  
+  }
+
+
+  function initCall() {
+    
+
+    yaxis_index = (data_type === "Requests") ? 1 
+        :(data_type === "Latency") ? 5
+        :(data_type === "Trafic") ? 7
+        :(data_type === "Users") ? 8
+        :1;
+
+
+    datahold = (tm === "M1") ? mockdata.M1 
+        :(tm === "H1") ? mockdata.H1 
+        :(tm === "D") ? mockdata.D
+        :mockdata.M1;
+
+    tm_lable = (tm === "M1") ? 'Minute Time Frame' 
+        :(tm === "H1") ? 'Hourly Time Frame' 
+        :(tm === "D") ? 'Daily Time Frame'  
+        :'Minute Time Frame';
+
+        
+    LineChart();
   }
 
   useEffect(() => {
 
-    var gottendata = [];
-    var tm = objdata.time;
 
-    if(objdata.data === "Requests"){
-        gottendata = (tm === "M1") ? requests.M1 
-                    :(tm === "H1") ? requests.H1 
-                    :(tm === "D1") ? requests.D1 
-                    :requests.M1;
-    }else if(objdata.data === "Latency"){
-        gottendata = (tm === "M1") ? latency.M1 
-                    :(tm === "H1") ? latency.H1 
-                    :(tm === "D1") ? latency.D1 
-                    :latency.M1;
-    }else if(objdata.data === "Trafic"){
-        gottendata = (tm === "M1") ? trafic.M1 
-                    :(tm === "H1") ? trafic.H1 
-                    :(tm === "D1") ? trafic.D1 
-                    :trafic.M1;
-    }else if(objdata.data === "Users"){
-        gottendata = (tm === "M1") ? users.M1 
-                    :(tm === "H1") ? users.H1 
-                    :(tm === "D1") ? users.D1 
-                    :users.M1;
-    }
-
-    LineChart();
-  }, []);
+    initCall();
+    
+  }, [objdata]);
 
   return(
     <>
-    <div>
-
-{objdata.data}
-;
-{objdata.graph}
-;
-{objdata.time }
-  
-</div>
-                  <br></br>
-      <svg id="LineChart" width = {350} height = {350}><path/></svg> 
+      <div>
+        {objdata.data};
+        {objdata.graph};
+        {objdata.time }
+      </div><br></br>
+      
+      <div class="linecontainer"><svg id="LineChart" width = {350} height = {350}><path/></svg> </div>
+      
     </>
   )
   
