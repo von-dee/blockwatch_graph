@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import BarChart, {initCall} from "./D3/BarChart";
+import React, { useState } from 'react';
+import BarChart from "./D3/BarChart";
 import LineGraph from "./D3/LineGraph";
 
 function App() {
+  // Holds values of the user's selected button option
   const [objdata, setObjdata] = useState({data:"Requests", graph:"Bar", time:"M1"})
 
+
+  // Updates data type => Requests, Latency, Trafic, Users
   function UpdateData (data) {
     setObjdata({data:data, graph:objdata.graph, time:objdata.time});
   }
 
+
+  // Updates Graph type => Line, Bar
   function UpdateGraph (graph) {
     setObjdata({data:objdata.data, graph:graph, time:objdata.time});
   }
 
+
+  // Updates Time Frame => M1, H1, D
   function UpdateTime (time) {
     setObjdata({data:objdata.data, graph:objdata.graph, time:time});
   }
+
 
   return (
     <>
@@ -26,12 +34,13 @@ function App() {
           <div class="card shadow mb-1 bg-white rounded" >
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-7">
+                <div class="col-sm-4">
                   <button type="button" class="btn btn-outline-dark bt-mr" onClick={() => UpdateData('Requests')}>Requests</button>
                   <button type="button" class="btn btn-outline-dark bt-mrl" onClick={() => UpdateData('Latency')}>Latency</button>
                   <button type="button" class="btn btn-outline-dark bt-mrl" onClick={() => UpdateData('Trafic')}>Trafic</button>
                   <button type="button" class="btn btn-outline-dark bt-ml" onClick={() => UpdateData('Users')}>Users</button>
                 </div>
+                <div class="col-sm-3"></div>
                 <div class="col-sm-2">
                   <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateGraph('Line')}>Line</button>
                   <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateGraph('Bar')}>Bar</button>
@@ -45,8 +54,8 @@ function App() {
 
               <div class="row">
                 <div class="col-sm-12 col-lg-12">
-                  {objdata.graph == 'Bar' && <BarChart objdata={objdata} /> }
-                  {objdata.graph == 'Line' && <LineGraph objdata={objdata} /> }
+                  {objdata.graph === 'Bar' && <BarChart objdata={objdata} /> }
+                  {objdata.graph === 'Line' && <LineGraph objdata={objdata} /> }
                 </div>
               </div>
               
