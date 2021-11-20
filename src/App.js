@@ -34,13 +34,12 @@ function App() {
           <div class="card shadow mb-1 bg-white rounded" >
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-7">
                   <button type="button" class="btn btn-outline-dark bt-mr" onClick={() => UpdateData('Requests')}>Requests</button>
                   <button type="button" class="btn btn-outline-dark bt-mrl" onClick={() => UpdateData('Latency')}>Latency</button>
                   <button type="button" class="btn btn-outline-dark bt-mrl" onClick={() => UpdateData('Trafic')}>Trafic</button>
                   <button type="button" class="btn btn-outline-dark bt-ml" onClick={() => UpdateData('Users')}>Users</button>
                 </div>
-                <div class="col-sm-3"></div>
                 <div class="col-sm-2">
                   <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateGraph('Line')}>Line</button>
                   <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateGraph('Bar')}>Bar</button>
