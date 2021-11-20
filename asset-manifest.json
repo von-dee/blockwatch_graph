@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/blockwatch_graph/static/js/main.29d36024.chunk.js",
-    "main.js.map": "/blockwatch_graph/static/js/main.29d36024.chunk.js.map",
+    "main.js": "/blockwatch_graph/static/js/main.e77de517.chunk.js",
+    "main.js.map": "/blockwatch_graph/static/js/main.e77de517.chunk.js.map",
     "runtime-main.js": "/blockwatch_graph/static/js/runtime-main.bd0dc346.js",
     "runtime-main.js.map": "/blockwatch_graph/static/js/runtime-main.bd0dc346.js.map",
     "static/js/2.d6d06008.chunk.js": "/blockwatch_graph/static/js/2.d6d06008.chunk.js",
     "static/js/2.d6d06008.chunk.js.map": "/blockwatch_graph/static/js/2.d6d06008.chunk.js.map",
     "index.html": "/blockwatch_graph/index.html",
-    "precache-manifest.8e522718eb173369df69d9dfb4f7793b.js": "/blockwatch_graph/precache-manifest.8e522718eb173369df69d9dfb4f7793b.js",
+    "precache-manifest.b6f7402e2397ccbd6c0664af14d5a3b3.js": "/blockwatch_graph/precache-manifest.b6f7402e2397ccbd6c0664af14d5a3b3.js",
     "service-worker.js": "/blockwatch_graph/service-worker.js"
   },
   "entrypoints": [
     "static/js/runtime-main.bd0dc346.js",
     "static/js/2.d6d06008.chunk.js",
-    "static/js/main.29d36024.chunk.js"
+    "static/js/main.e77de517.chunk.js"
   ]
 }
