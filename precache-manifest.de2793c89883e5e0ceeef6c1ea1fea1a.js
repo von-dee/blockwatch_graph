@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b8fc2fd40b6027c4ff6e902ecc0df2e0",
+    "revision": "a9cdcc71d907d2985fb0a5f8aae7a85c",
     "url": "/blockwatch_graph/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/blockwatch_graph/static/js/2.dbcad533.chunk.js"
   },
   {
-    "revision": "3a28b427a5fb57358b83",
-    "url": "/blockwatch_graph/static/js/main.0c86bebe.chunk.js"
+    "revision": "6232d59d3a2fd1c37275",
+    "url": "/blockwatch_graph/static/js/main.20cfb0b0.chunk.js"
   },
   {
     "revision": "2bce64983b5d649f228b",
