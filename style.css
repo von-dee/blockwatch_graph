@@ -1,0 +1,114 @@
+.title{
+    margin-left: 5em;
+    margin-top: 1em;
+    margin-bottom: 0em;
+}
+
+.subtitle{
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
+.badge_status{}
+
+.badge_green{
+    color: #198754 !important;
+}
+
+.badge_orange{
+    color: orange !important;
+}
+
+.badge_red{
+    color: red !important;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    height: 10px;
+    width: 10px;
+    margin-right: 0.2em;
+}
+
+.float_right{    
+    float: right;
+}
+
+hr{
+    margin: 10px 0px;
+}
+
+.faded{
+    color: #a5a5a5;
+}
+
+.bt-mr{
+    margin-right: 1em;
+}
+
+.bt-ml{
+    margin-left: 1em;
+}
+
+.bt-mrl{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.btn-link {
+    font-weight: 400 !important;
+    color: #000 !important;
+    text-decoration: none !important;
+}
+
+/* Bar Chart */
+#BarChart { 
+    display: flex; 
+    flex-direction: row; /* Arrange the Bars Horizontally using FlexBox  */
+    align-items: flex-end; /* Have the bars start at the bottom and go up */
+    justify-content: center; /* Center the bars in the middle of the screen */
+    margin: 15px;
+}
+
+.bar {
+    background-color: #3aa70f; /* Have each bar be a nice green */
+    width: 65px; /* The animation will start with each bar being 10px wide, and then expand outwards */
+}
+
+
+/* Line Chart */
+#LineChart {
+    overflow: visible /* Just in case the axis render outside of our div, let's make sure it still displays */
+}
+
+.linecontainer{
+    margin: 4em 20em 4em 9em;
+}
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: auto;					
+    height: auto;					
+    padding: 1em 2em;				
+    font: 12px sans-serif;		
+    background: white;	
+    border: 0px;		
+    border-radius: 0px;			
+    border: 1px solid #000;
+    pointer-events: none;			
+}
