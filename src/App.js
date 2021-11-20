@@ -39,9 +39,9 @@ function App() {
                   <button type="button" class="btn btn-link bt-mrl" onClick={() => updateData({data: 'Bar'})}>Bar</button>
                 </div>
                 <div class="col-sm-3">
-                  <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateData({data: 'M1'})}>M1</button>
-                  <button type="button" class="btn btn-link bt-mrl" onClick={() => UpdateData({data: 'H1'})}>H1</button>
-                  <button type="button" class="btn btn-link bt-ml" onClick={() => UpdateData({data: 'D'})}>D</button>
+                  <button type="button" class="btn btn-link bt-mrl" onClick={() => updateData({data: 'M1'})}>M1</button>
+                  <button type="button" class="btn btn-link bt-mrl" onClick={() => updateData({data: 'H1'})}>H1</button>
+                  <button type="button" class="btn btn-link bt-ml" onClick={() => updateData({data: 'D'})}>D</button>
                 </div>
               </div>
 
